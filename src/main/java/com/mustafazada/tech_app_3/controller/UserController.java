@@ -1,5 +1,6 @@
-package com.mustafazada.tech_app_3.config.controller;
+package com.mustafazada.tech_app_3.controller;
 
+import com.mustafazada.tech_app_3.dto.request.AuthenticationRequestDTO;
 import com.mustafazada.tech_app_3.dto.request.UserRequestDTO;
 import com.mustafazada.tech_app_3.service.UserService;
 import lombok.AccessLevel;
@@ -22,5 +23,10 @@ public class UserController {
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody UserRequestDTO userRequestDTO) {
         return new ResponseEntity<>(userService.saveUser(userRequestDTO), HttpStatus.OK);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> loginUser(@RequestBody AuthenticationRequestDTO authenticationRequestDTO) {
+        return new ResponseEntity<>(userService.loginUser(authenticationRequestDTO), HttpStatus.OK);
     }
 }
