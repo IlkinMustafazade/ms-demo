@@ -23,11 +23,11 @@ public class AccountResponseDTO implements Serializable {
     Integer accountNo;
 
     public static AccountResponseDTO entityDTO(Account account) {
-            return AccountResponseDTO.builder()
-                    .balance(account.getBalance())
-                    .currency(account.getCurrency())
-                    .isActive(account.getIsActive())
-                    .accountNo(account.getAccountNo())
-                    .build();
+        return AccountResponseDTO.builder()
+                .balance(account.getBalance())
+                .currency(account.getCurrency())
+                .isActive(account.getIsActive())
+                .accountNo(account.getAccountNo())
+                .build();
     }
 }
