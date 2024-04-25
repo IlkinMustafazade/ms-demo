@@ -1,10 +1,8 @@
 package com.mustafazada.msdemofin.service;
 
+import com.mustafazada.msdemofin.config.security.JWTUtil;
 import com.mustafazada.msdemofin.dto.request.AuthenticationRequestDTO;
-import com.mustafazada.msdemofin.dto.response.CommonResponseDTO;
-import com.mustafazada.msdemofin.dto.response.Status;
-import com.mustafazada.msdemofin.dto.response.StatusCode;
-import com.mustafazada.msdemofin.dto.response.UserResponseDTO;
+import com.mustafazada.msdemofin.dto.response.*;
 import com.mustafazada.msdemofin.exception.BadInputCredentialsException;
 import com.mustafazada.msdemofin.util.DTOCheckUtil;
 import lombok.AccessLevel;
@@ -12,13 +10,17 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class UserLoginService {
+    JWTUtil jwtUtil;
     DTOCheckUtil dtoCheckUtil;
+    UserDetailsService userDetailsService;
     AuthenticationManager authenticationManager;
 
     public CommonResponseDTO<?> loginUser(AuthenticationRequestDTO authenticationRequestDTO) {
@@ -36,10 +38,12 @@ public class UserLoginService {
                             + authenticationRequestDTO.getPassword() + " is wrong")
                     .build()).build()).build();
         }
-
+        UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequestDTO.getPin());
         return CommonResponseDTO.builder().status(Status.builder()
-                        .statusCode(StatusCode.SUCCESS)
-                        .message("Welcome our FIN_TECH application")
-                        .build()).data(authenticationRequestDTO).build();
+                .statusCode(StatusCode.SUCCESS)
+                .message("Token was created SUCCESSFULLY")
+                .build()).data(AuthenticationResponseDTO.builder()
+                .token(jwtUtil.createToken(userDetails))
+                .build()).build();
     }
 }

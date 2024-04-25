@@ -47,4 +47,9 @@ public class GlobalExceptionHandling {
     public ResponseEntity<?> badCredentials(BadInputCredentialsException badInputCredentialsException) {
         return new ResponseEntity<>(badInputCredentialsException.getResponseDTO(), HttpStatus.UNAUTHORIZED);
     }
+
+    @ExceptionHandler(value = NotActiveAccountException.class)
+    public ResponseEntity<?> NotExistActiveAccount(NotActiveAccountException noSuchUserExistException) {
+        return new ResponseEntity<>(noSuchUserExistException.getResponseDTO(), HttpStatus.NOT_FOUND);
+    }
 }
