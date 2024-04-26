@@ -1,5 +1,6 @@
 package com.mustafazada.msdemofin.util;
 
+import com.mustafazada.msdemofin.dto.request.AccountToAccountRequestDTO;
 import com.mustafazada.msdemofin.dto.request.AuthenticationRequestDTO;
 import com.mustafazada.msdemofin.dto.request.UserRequestDTO;
 import com.mustafazada.msdemofin.dto.response.CommonResponseDTO;
@@ -32,6 +33,13 @@ public class DTOCheckUtil {
     public void isValid(AuthenticationRequestDTO authenticationRequestDTO) {
         checkDTOInput(authenticationRequestDTO.getPassword());
         checkDTOInput(authenticationRequestDTO.getPin());
+
+    }
+
+    public void isValid(AccountToAccountRequestDTO accountToAccountRequestDTO) {
+        checkDTOInput(accountToAccountRequestDTO.getDebitAccountNumber());
+        checkDTOInput(accountToAccountRequestDTO.getCreditAccountNumber());
+        checkDTOInput(accountToAccountRequestDTO.getAmount());
 
     }
 

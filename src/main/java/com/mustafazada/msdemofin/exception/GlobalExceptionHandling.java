@@ -49,7 +49,37 @@ public class GlobalExceptionHandling {
     }
 
     @ExceptionHandler(value = NotActiveAccountException.class)
-    public ResponseEntity<?> NotExistActiveAccount(NotActiveAccountException noSuchUserExistException) {
+    public ResponseEntity<?> notExistActiveAccount(NotActiveAccountException noSuchUserExistException) {
         return new ResponseEntity<>(noSuchUserExistException.getResponseDTO(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(value = InvalidAmountException.class)
+    public ResponseEntity<?> invalidAmount(InvalidAmountException invalidAmountException) {
+        return new ResponseEntity<>(invalidAmountException.getResponseDTO(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(value = EqualAccountException.class)
+    public ResponseEntity<?> sameAccounts(EqualAccountException equalAccountException) {
+        return new ResponseEntity<>(equalAccountException.getResponseDTO(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(value = InsufficientBalanceException.class)
+    public ResponseEntity<?> insufficientBalance(InsufficientBalanceException insufficientBalanceException) {
+        return new ResponseEntity<>(insufficientBalanceException.getResponseDTO(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(value = NotAccountFoundException.class)
+    public ResponseEntity<?> accountNotFound(NotAccountFoundException notAccountFoundException) {
+        return new ResponseEntity<>(notAccountFoundException.getResponseDTO(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(value = InvalidTokenException.class)
+    public ResponseEntity<?> invalidToken(InvalidTokenException invalidTokenException) {
+        return new ResponseEntity<>(invalidTokenException.getResponseDTO(), HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(value = NoTiedTokenException.class)
+    public ResponseEntity<?> invalidToken(NoTiedTokenException noTiedTokenException) {
+        return new ResponseEntity<>(noTiedTokenException.getResponseDTO(), HttpStatus.FORBIDDEN);
     }
 }
