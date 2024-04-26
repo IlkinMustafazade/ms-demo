@@ -1,10 +1,9 @@
 package com.mustafazada.msdemofin.dto.response;
 
+
 import com.mustafazada.msdemofin.entity.Account;
 import com.mustafazada.msdemofin.util.Currency;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.io.Serializable;
@@ -29,5 +28,4 @@ public class AccountResponseDTO implements Serializable {
                 .accountNo(account.getAccountNo())
                 .build();
     }
-
 }
