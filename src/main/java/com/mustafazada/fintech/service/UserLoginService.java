@@ -1,6 +1,8 @@
 package com.mustafazada.fintech.service;
 
+import com.mustafazada.fintech.config.security.JWTUtil;
 import com.mustafazada.fintech.dto.request.AuthenticationRequestDTO;
+import com.mustafazada.fintech.dto.response.AuthenticationResponseDTO;
 import com.mustafazada.fintech.dto.response.CommonResponseDTO;
 import com.mustafazada.fintech.dto.response.Status;
 import com.mustafazada.fintech.dto.response.StatusCode;
@@ -11,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,7 +22,9 @@ import org.springframework.stereotype.Service;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class UserLoginService {
     AuthenticationManager authenticationManager;
+    UserDetailsService userDetailsService;
     DTOCheckUtil dtoCheckUtil;
+    JWTUtil jwtUtil;
 
     public CommonResponseDTO<?> loginUser(AuthenticationRequestDTO authenticationRequestDTO) {
         dtoCheckUtil.isValid(authenticationRequestDTO);
@@ -37,10 +43,13 @@ public class UserLoginService {
                             .build()).build()).build();
         }
 
+        UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequestDTO.getPin());
 
         return CommonResponseDTO.builder().status(Status.builder()
                 .statusCode(StatusCode.SUCCESS)
-                .message("Welcome to Fintech application")
-                .build()).data(authenticationRequestDTO).build();
+                .message("Welcome to Fintech application. Token was generated successfully")
+                .build()).data(AuthenticationResponseDTO.builder()
+                .token(jwtUtil.createToken(userDetails))
+                .build()).build();
     }
 }

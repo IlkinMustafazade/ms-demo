@@ -9,4 +9,5 @@ spring:
     open-in-view: false
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
+SECRET_KEY: wh&e*vr3vqa8yydng4#i7o6j-j4sna2+=3o8-w0v#_8xmlg_8j
